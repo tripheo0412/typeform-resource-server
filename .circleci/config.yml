@@ -3,12 +3,6 @@ jobs:
   build:
     docker:
       - image: circleci/node:10.16.0
-        environment:
-          DB_HOST_TEST: ds231537.mlab.com
-          DB_PORT_TEST: 31537
-          DB_COLLECTION_TEST: typeformtest
-          DB_USER_TEST: adminTest123
-          DB_PASS_TEST: adminTest123
     steps:
       - checkout
       - run: yarn install

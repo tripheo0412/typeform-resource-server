@@ -1,5 +1,5 @@
 const { keys } = require('../../config');
 
 const generateURL = email =>
-  email.slice(0, email.indexOf('@')).concat(`.${process.env.DOMAIN}`);
+  email.slice(0, email.indexOf('@')).concat(`.${keys.DOMAIN}`);
 module.exports = generateURL;

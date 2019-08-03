@@ -8,7 +8,14 @@
   "license": "MIT",
   "scripts": {
     "build": "NODE_ENV=DEV nodemon index.js",
-    "start-dev": "NODE_ENV=DEV nodemon index.js"
+    "lint": "eslint controllers models middlewares ",
+    "lint:fix": "eslint . --fix",
+    "generate-docs": "apidoc -e node_modules report .nyc_output -o public/apidoc",
+    "start-dev": "NODE_ENV=DEV nodemon index.js",
+    "test": "cross-env NODE_ENV=test mocha --timeout 5000 './{,!(node_modules)/**}/*.test.js'",
+    "report": "cross-env NODE_ENV=test nyc --reporter=lcov mocha --timeout 5000 './{,!(node_modules)/**}/*.test.js'",
+    "text-report": "cross-env NODE_ENV=test nyc --reporter=text-summary mocha --timeout 5000 './{,!(node_modules)/**}/*.test.js'",
+    "nyc": "cross-env NODE_ENV=test nyc mocha --timeout 5000 './{,!(node_modules)/**}/*.test.js'"
   },
   "engines": {
     "node": "10.16.0"
@@ -54,5 +61,14 @@
     "prettier": "^1.18.2",
     "sinon": "^7.3.2",
     "sinon-chai": "^3.3.0"
+  },
+  "nyc": {
+    "exclude": [
+      "__tests__",
+      "node_modules",
+      "public"
+    ],
+    "cache": false,
+    "report-dir": "./report"
   }
 }

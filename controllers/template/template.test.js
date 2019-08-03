@@ -2,7 +2,6 @@ const chai = require('chai');
 const sinon = require('sinon');
 const Controller = require('.');
 const Template = require('../../models/template');
-const Form = require('../../models/form');
 const Workspace = require('../../models/workspace');
 const handleResponse = require('../../utils/handleResponse');
 

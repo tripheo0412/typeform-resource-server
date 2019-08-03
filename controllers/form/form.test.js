@@ -2,22 +2,7 @@ const chai = require('chai');
 const sinon = require('sinon');
 const Controller = require('.');
 const Template = require('../../models/template');
-const Form = require('../../models/form');
-const handleResponse = require('../../utils/handleResponse');
-
-const { expect } = chai;
-
-let sandbox;
-let res = {};
-
-describe('Test form controller', () => {
-  beforeEach(() => {
-    sandbox = sinon.createSandbox();
-    res = { status: () => res, json: () => res };
-  });
-
-  afterEach(() => {
-    sandbox.restore();
+con
   });
 
   describe('Test create', () => {

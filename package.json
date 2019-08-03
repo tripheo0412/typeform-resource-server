@@ -1,0 +1,16 @@
+{
+  "name": "typeform-resource-server",
+  "version": "0.0.1",
+  "description": "Resource server (backend service for Typeform)",
+  "main": "index.js",
+  "repository": "https://github.com/tripheo0412/typeform-resource-server.git",
+  "author": "tripheo0412 <tripheo0412@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "NODE_ENV=DEV nodemon index.js",
+    "start-dev": "NODE_ENV=DEV nodemon index.js"
+  },
+  "engines": {
+    "node": "10.16.0"
+  },
+}

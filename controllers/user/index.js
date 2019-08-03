@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const JWT = require('jsonwebtoken');
 const User = require('../../models/user');
 const Theme = require('../../models/theme');

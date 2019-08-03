@@ -3,14 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const cors = require('cors');
-const path = require('path');
-const mongoose = require('mongoose');
-const helmet = require('helmet');
-const { keys, mongooseOptions } = require('./config');
-
-require('./middlewares/passport');
-
-if (process.env.NODE_ENV !== 'TEST') {
+con 'TEST') {
   mongoose
     .connect(keys.mongoURI, mongooseOptions)
     .then(() => console.log(`MongoDB ${keys.type} connected`))

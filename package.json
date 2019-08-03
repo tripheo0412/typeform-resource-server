@@ -1,0 +1,58 @@
+{
+  "name": "typeform-resource-server",
+  "version": "0.0.1",
+  "description": "Resource server (backend service for Typeform)",
+  "main": "index.js",
+  "repository": "https://github.com/tripheo0412/typeform-resource-server.git",
+  "author": "tripheo0412 <tripheo0412@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "NODE_ENV=DEV nodemon index.js",
+    "start-dev": "NODE_ENV=DEV nodemon index.js"
+  },
+  "engines": {
+    "node": "10.16.0"
+  },
+  "dependencies": {
+    "@hapi/joi": "^15.1.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "cross-env": "^5.2.0",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "helmet": "^3.20.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.6.8",
+    "nodemailer": "^6.3.0",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "shortid": "^2.2.14",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "apidoc": "^0.17.7",
+    "babel-eslint": "^10.0.2",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb": "^17.1.1",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-config-wesbos": "^0.0.19",
+    "eslint-plugin-html": "^6.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-markdown": "^1.0.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^1.6.1",
+    "faker": "^4.1.0",
+    "mocha": "^6.2.0",
+    "node-mocks-http": "^1.7.6",
+    "nodemon": "^1.19.1",
+    "nyc": "^14.1.1",
+    "prettier": "^1.18.2",
+    "sinon": "^7.3.2",
+    "sinon-chai": "^3.3.0"
+  }
+}

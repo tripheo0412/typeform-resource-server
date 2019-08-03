@@ -13,9 +13,10 @@
     "generate-docs": "apidoc -e node_modules report .nyc_output -o public/apidoc",
     "start-dev": "NODE_ENV=DEV nodemon index.js",
     "test": "cross-env NODE_ENV=test mocha --timeout 5000 './{,!(node_modules)/**}/*.test.js'",
-    "report": "cross-env NODE_ENV=test nyc --reporter=lcov mocha --timeout 5000 './{,!(node_modules)/**}/*.test.js'",
+    "report": "cross-env NODE_ENV=test nyc --reporter=lcov | mocha --timeout 5000 './{,!(node_modules)/**}/*.test.js'",
     "text-report": "cross-env NODE_ENV=test nyc --reporter=text-summary mocha --timeout 5000 './{,!(node_modules)/**}/*.test.js'",
-    "nyc": "cross-env NODE_ENV=test nyc mocha --timeout 5000 './{,!(node_modules)/**}/*.test.js'"
+    "nyc": "cross-env NODE_ENV=test nyc mocha --timeout 5000 './{,!(node_modules)/**}/*.test.js'",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "engines": {
     "node": "10.16.0"
@@ -42,6 +43,7 @@
     "babel-eslint": "^10.0.2",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
+    "coveralls": "^3.0.5",
     "eslint": "^6.1.0",
     "eslint-config-airbnb": "^17.1.1",
     "eslint-config-prettier": "^6.0.0",

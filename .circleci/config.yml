@@ -9,4 +9,4 @@ jobs:
       - run: yarn test
       - run: yarn lint
       - run: yarn nyc
-      - run: "./node_modules/.bin/nyc report --reporter=text-lcov | coveralls"
+      - run: yarn coverage

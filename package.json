@@ -16,7 +16,7 @@
     "report": "NODE_ENV=TEST nyc --reporter=lcov | mocha --timeout 5000 './{,!(node_modules)/**}/*.test.js'",
     "text-report": "NODE_ENV=TEST nyc --reporter=text-summary mocha --timeout 5000 './{,!(node_modules)/**}/*.test.js'",
     "nyc": "NODE_ENV=TEST nyc mocha --timeout 5000 './{,!(node_modules)/**}/*.test.js'",
-    "coverage": "nyc report --reporter=TEST-lcov | coveralls"
+    "coverage": "coveralls"
   },
   "engines": {
     "node": "10.16.0"

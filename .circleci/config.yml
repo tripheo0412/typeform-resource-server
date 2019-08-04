@@ -6,5 +6,25 @@ jobs:
     steps:
       - checkout
       - run: yarn install
-      - run: yarn test
-      - run: yarn lint
+  test:
+    docker:
+      - image: circleci/node:10.16.0
+    steps:
+      - checkout
+      - run:
+          name: Test
+          command: yarn test
+      - run:
+          name: Generate code coverage
+          command: "./node_modules/.bin/nyc report --reporter=text-lcov | coveralls"
+      - run:
+          name: Lint test
+          command: yarn lint
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build

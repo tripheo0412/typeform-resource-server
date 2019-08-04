@@ -12,10 +12,10 @@
     "lint:fix": "eslint . --fix",
     "generate-docs": "apidoc -e node_modules report .nyc_output -o public/apidoc",
     "start-dev": "NODE_ENV=DEV nodemon index.js",
-    "test": "cross-env NODE_ENV=test mocha --timeout 5000 './{,!(node_modules)/**}/*.test.js'",
-    "report": "cross-env NODE_ENV=test nyc --reporter=lcov | mocha --timeout 5000 './{,!(node_modules)/**}/*.test.js'",
-    "text-report": "cross-env NODE_ENV=test nyc --reporter=text-summary mocha --timeout 5000 './{,!(node_modules)/**}/*.test.js'",
-    "nyc": "cross-env NODE_ENV=test nyc mocha --timeout 5000 './{,!(node_modules)/**}/*.test.js'",
+    "test": "cross-env NODE_ENV=TEST mocha --timeout 5000 './{,!(node_modules)/**}/*.test.js'",
+    "report": "cross-env NODE_ENV=TEST nyc --reporter=lcov | mocha --timeout 5000 './{,!(node_modules)/**}/*.test.js'",
+    "text-report": "cross-env NODE_ENV=TEST nyc --reporter=text-summary mocha --timeout 5000 './{,!(node_modules)/**}/*.test.js'",
+    "nyc": "cross-env NODE_ENV=TEST nyc mocha --timeout 5000 './{,!(node_modules)/**}/*.test.js'",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "engines": {

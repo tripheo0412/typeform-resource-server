@@ -6,6 +6,17 @@ jobs:
     steps:
       - checkout
       - run: yarn install
-      - run: yarn test
-      - run: yarn lint
-      - run: yarn coverage
+  test:
+    docker:
+      - image: circleci/node:10.16.0
+    steps:
+      - checkout
+      - run:
+        name: Lint test
+        command: 'yarn lint'
+      - run:
+        name: Unit test
+        command: 'yarn test'
+      - run:
+        name: Generate code coverage
+        run: 'yarn coverage'

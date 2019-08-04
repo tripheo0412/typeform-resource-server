@@ -12,14 +12,14 @@ jobs:
     steps:
       - checkout
       - run:
-        name: Lint test + Unit test
-        command: "yarn lint"
+        name: Lint test
+        command: yarn lint
       - run:
         name: Unit test
-        command: "yarn test"
+        command: yarn test
       - run:
         name: Generate code coverage
-        command: "yarn coverage"
+        command: yarn coverage
 workflows:
   version: 2
   build_and_test:

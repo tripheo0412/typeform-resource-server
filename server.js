@@ -11,6 +11,7 @@ const { keys, mongooseOptions } = require('./src/config');
 require('./src/middlewares/passport');
 
 if (process.env.NODE_ENV !== 'TEST') {
+  console.log(keys.mongoURI);
   mongoose
     .connect(keys.mongoURI, mongooseOptions)
     .then(() => console.log(`MongoDB ${keys.type} connected`))

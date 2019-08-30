@@ -1,14 +1,14 @@
 /* eslint-disable no-console */
 const express = require('express');
+const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
-const passport = require('passport');
 const cors = require('cors');
 const path = require('path');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
-const { keys, mongooseOptions } = require('./config');
+const { keys, mongooseOptions } = require('./src/config');
 
-require('./middlewares/passport');
+require('./src/middlewares/passport');
 
 if (process.env.NODE_ENV !== 'TEST') {
   mongoose
@@ -19,6 +19,7 @@ if (process.env.NODE_ENV !== 'TEST') {
 const app = express();
 app.use(helmet({ ieNoOpen: false }));
 app.enable('trust proxy');
+
 app.use(
   cors({
     origin: '*',
@@ -28,43 +29,23 @@ app.use(
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.engine('handlebars', exphbs());
+app.set('view engine', 'handlebars');
 app.use(express.static('public/apidoc'));
 app.get('/', (req, res) => {
   res.json({ message: 'Resources Server' });
 });
-
 app.get('/apidoc', (req, res) => {
   res.sendFile(path.join(`${__dirname}/public/apidoc/index.html`));
 });
 
-app.use('/users', require('./routers/users'));
-app.use(
-  '/templates',
-  passport.authenticate('jwt', { session: false }),
-  require('./routers/templates')
-);
-app.use(
-  '/themes',
-  passport.authenticate('jwt', { session: false }),
-  require('./routers/themes')
-);
-app.use(
-  '/workspaces',
-  passport.authenticate('jwt', { session: false }),
-  require('./routers/workspaces')
-);
-app.use(
-  '/forms',
-  passport.authenticate('jwt', { session: false }),
-  require('./routers/forms')
-);
+app.use('/users', require('./src/routers/usersRouter'));
+app.use('/templates', require('./src/routers/templatesRouter'));
+app.use('/themes', require('./src/routers/themesRouter'));
+app.use('/workspaces', require('./src/routers/workspacesRouter'));
+app.use('/forms', require('./src/routers/formsRouter'));
 
-app.get(
-  '/secret',
-  passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    res.send('ok');
-  }
-);
-
-module.exports = app;
+const PORT = keys.RES_PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Resources server is running at localhost:${PORT}`);
+});

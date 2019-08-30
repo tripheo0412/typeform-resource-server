@@ -1,11 +1,14 @@
 /* eslint-disable no-console */
 const JWT = require('jsonwebtoken');
 const User = require('../../models/user');
+const Authority = require('../../models/authority');
 const Theme = require('../../models/theme');
-const mailer = require('../../utils/mailer');
-const handleResponse = require('../../utils/handleResponse');
+const Workspace = require('../../models/workspace');
+const Template = require('../../models/template');
+const Form = require('../../models/form');
+const { mail, transporter } = require('../../utils/mailer');
+const { success } = require('../../utils/handleResponse');
 
-const generateURL = require('../../utils/generateURL');
 const { keys } = require('../../config');
 
 const signVerifyToken = user =>
@@ -46,28 +49,24 @@ const signUp = async (req, res) => {
       fname,
       role,
       profilePicture,
-      templateURL: generateURL(email),
+      templateURL: keys.CLIENT_SITE_URL,
     });
     await newUser.save();
-    const mailOptions = {
-      from: keys.MAILER_USER,
-      to: newUser.local.email,
-      subject: 'Typeform verify account by clicking this link',
-      text: 'Verify Account by clicking this link',
-      html: `<a href="https://typeform-clone-auth-tripheo0412.now.sh/users/verify?token=${signVerifyToken(
-        newUser
-      )}"> Click here to verify </a>`,
-    };
-
-    mailer.transporter.sendMail(mailOptions, (error, info) => {
+    const token = signVerifyToken(newUser);
+    const mailOptions = mail;
+    mailOptions.subject = `Hi ${fname} ${lname}! Welcome to Typeform, please verify your account`;
+    mailOptions.context.action_url = `/users/verify?token=${token}`;
+    mailOptions.to = [newUser.local.email];
+    console.log('send mail on controller');
+    transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         console.log(error);
       } else {
         console.log(mailOptions);
         console.log(`Email sent: ${info.response}`);
+        return res.status(201).json({ success: true });
       }
     });
-    return res.status(201).json({ success: true });
   } catch (error) {
     return res.status(400).json(error);
   }
@@ -76,7 +75,7 @@ const signUp = async (req, res) => {
 const getUser = async (req, res) => {
   try {
     const {
-      _id,
+      id,
       local: { email },
       fname,
       lname,
@@ -87,7 +86,7 @@ const getUser = async (req, res) => {
     } = req.user;
 
     res.status(200).json({
-      _id,
+      id,
       local: { email },
       fname,
       lname,
@@ -104,7 +103,7 @@ const getUser = async (req, res) => {
 const updateProfile = async (req, res) => {
   try {
     const { fname, lname, profilePicture } = req.body;
-    const user = await User.findById(req.user._id);
+    const user = await User.findById(req.user.id);
     user.fname = fname;
     user.lname = lname;
     user.profilePicture = profilePicture;
@@ -125,15 +124,46 @@ const updateProfile = async (req, res) => {
 };
 
 const deleteUser = (req, res) => {
-  User.findByIdAndDelete(req.user._id)
-    .then(user => {
-      if (handleResponse.notNullObject(user, 'user', res)) {
-        Theme.remove({ themeId: user._id });
-        return res.status(200).json(handleResponse.success);
+  const userId = req.user.id;
+
+  User.findByIdAndDelete(userId)
+    .then(async user => {
+      try {
+        await Authority.deleteMany({ userId: req.user.id });
+
+        await Workspace.updateMany(
+          {
+            collaborators: userId,
+          },
+          { $pull: { collaborators: userId } }
+        );
+
+        const workspaces = await Workspace.find({
+          _id: { $in: user.workspaces },
+        });
+
+        workspaces.forEach(async workspace => {
+          const templates = await Template.find({
+            _id: { $in: workspace.templates },
+          });
+          templates.forEach(async template => {
+            await Form.deleteMany({ _id: { $in: template.forms } });
+            await template.remove();
+          });
+          await workspace.remove();
+        });
+
+        await Theme.deleteMany({ _id: { $in: user.themes } });
+
+        return res.status(200).json(success);
+      } catch (err) {
+        console.log(err);
+        return res.status(400).json(err);
       }
     })
     .catch(err => res.status(400).json(err));
 };
+
 module.exports = {
   signUp,
   getUser,

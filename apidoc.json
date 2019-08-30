@@ -1,0 +1,9 @@
+{
+    "name": "typeform-backend",
+    "version": "0.0.1",
+    "description": "typeform apidoc",
+    "title": "Typeform api documentation",
+    "template": {
+        "forceLanguage": "en"
+    }
+}

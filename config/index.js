@@ -20,7 +20,7 @@ switch (process.env.NODE_ENV) {
     generateConfig(keysProd);
     break;
   }
-  case 'DEV': {
+  case 'production': {
     generateConfig(keysDev);
     break;
   }

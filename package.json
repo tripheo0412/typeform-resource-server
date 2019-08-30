@@ -5,9 +5,10 @@
   "author": "Yazan Al Halabi",
   "license": "ISC",
   "scripts": {
-    "build": "NODE_ENV=DEV nodemon server.js",
+    "build": "NODE_ENV=DEV node server.js",
     "lint": "eslint src/controllers src/models src/middlewares ",
     "lint:fix": "eslint . --fix",
+    "start": "NODE_ENV=DEV node server.js",
     "generate-docs": "apidoc -e node_modules report .nyc_output -o public/apidoc",
     "start-dev": "NODE_ENV=DEV nodemon server.js",
     "test": "NODE_ENV=TEST mocha --timeout 5000 './{,!(node_modules)/**}/*.test.js'",
